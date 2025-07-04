@@ -3,6 +3,7 @@ package Entities;
 import Entities.Common.IEntity;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Customer implements IEntity {
     private final UUID id;
@@ -28,6 +29,7 @@ public class Customer implements IEntity {
         this.email = email;
         this.password = password;
         this.phone = phone;
+        this.balance = ThreadLocalRandom.current().nextDouble(1000.0, 5000.01);
         this.isActive = true;
         this.isDeleted = false;
         this.createdAt = new Date();

@@ -7,6 +7,7 @@ import Entities.Product;
 import Helper.InMemoryDatabase;
 import Helper.TableName;
 
+import java.time.Instant;
 import java.util.*;
 
 public class CartProductRepository implements ICartProductRepository {
@@ -55,6 +56,7 @@ public class CartProductRepository implements ICartProductRepository {
             CartProduct cp = table.get(i);
             if (cp.getCartId().equals(cartProduct.getCartId()) &&
                     cp.getProductId().equals(cartProduct.getProductId())) {
+                cartProduct.setUpdatedAt(Date.from(Instant.now()));
                 table.set(i, cartProduct);
                 return;
             }

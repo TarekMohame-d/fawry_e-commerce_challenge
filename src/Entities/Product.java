@@ -1,17 +1,19 @@
 package Entities;
 
+import Entities.Common.ICanBeShipped;
 import Entities.Common.IEntity;
 
 import java.util.*;
 
-public class Product implements IEntity {
+public class Product implements IEntity, ICanBeShipped {
     private final UUID id;
     private String name;
     private String description;
     private double price;
     private int stockQuantity;
-    private Date expiredAt;
     private double discount;
+    private Date expiredAt;
+    private boolean canBeShipped;
     private double weight;
     private final Date createdAt;
     private Date updatedAt;
@@ -27,6 +29,7 @@ public class Product implements IEntity {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.canBeShipped = true;
         this.stockQuantity = stockQuantity;
         this.expiredAt = expiredAt;
         this.discount = discount;
@@ -47,6 +50,7 @@ public class Product implements IEntity {
     public List<WishlistProduct> wishlistProducts = new ArrayList<WishlistProduct>();
 
     // Getters
+    @Override
     public String getName() {
         return name;
     }
@@ -71,6 +75,7 @@ public class Product implements IEntity {
         return discount;
     }
 
+    @Override
     public double getWeight() {
         return weight;
     }
@@ -99,7 +104,15 @@ public class Product implements IEntity {
         return wishlistProducts;
     }
 
+    public boolean canBeShipped() {
+        return canBeShipped;
+    }
+
     // Setters
+    public void setCanBeShipped(boolean canBeShipped) {
+        this.canBeShipped = canBeShipped;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
