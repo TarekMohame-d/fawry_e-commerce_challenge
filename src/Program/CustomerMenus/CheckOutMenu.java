@@ -1,50 +1,63 @@
+package Program.CustomerMenus;
+
 import Contract.Repository.ICustomerRepository;
 import Contract.Services.ICartServices;
 import Contract.Services.ICustomerServices;
 import Contract.Services.IProductServices;
-import DTOs.Customer.CustomerRegisterRequestDto;
 import DTOs.Product.CartItemDto;
 import Entities.Customer;
 import Entities.Product;
-import Helper.Preparation;
 import Implementation.Repository.CustomerRepository;
 import Implementation.Services.CartService;
 import Implementation.Services.CustomerServices;
 import Implementation.Services.ProductServices;
-import Program.FirstMenu;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.UUID;
 
-public class Main {
-    public static void main(String[] args) {
-        Preparation.prepare();
-        // Preview before running
-        ICustomerServices customerServices = new CustomerServices();
-        IProductServices productServices = new ProductServices();
-        ICartServices cartServices = new CartService();
+public class CheckOutMenu {
+    private static ICustomerServices customerServices;
+    private static ICustomerRepository customerRepository;
+    private static IProductServices productServices;
+    private static ICartServices cartServices;
 
-        CustomerRegisterRequestDto dto = new CustomerRegisterRequestDto("Tarek", "Mohamed", "tarek@example.com", "123456", "0100000001");
-        UUID customerId =customerServices.registerCustomer(dto);
+    public static void Run(UUID id) {
+        customerServices = new CustomerServices();
+        productServices = new ProductServices();
+        cartServices = new CartService();
+        customerRepository = new CustomerRepository();
 
-        cartServices.createCart(customerId);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("============================== Checkout ==============================");
+        List<CartItemDto> products = cartServices.getCartProducts(id);
+        Customer customer = customerRepository.getById(id).orElse(null);
 
+        System.out.println("Products in cart:");
+        for (CartItemDto product : products) {
+            System.out.println(product.getProductId() + " - " + product.getProductName() + " - " + product.getPrice() + "€");
+        }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, 30);
-        Date futureDate = calendar.getTime();
-        Product product1 = new Product("Laptop", "Laptop Description", 1000.0, 10, futureDate, 0.2, 2.5);
-        Product product2 = new Product("Mobile", "Mobile Description", 500.0, 5, futureDate, 0.1, 0.5);
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("1) Checkout: ");
+            System.out.println("2) Cancel: ");
 
-        productServices.addProduct(product1);
-        productServices.addProduct(product2);
+            int option = sc.nextInt();
 
-        cartServices.addToCart(customerId, product1.getId(), 2);
-        cartServices.addToCart(customerId, product2.getId(), 1);
-
-        List<CartItemDto> cartProducts = cartServices.getCartProducts(customerId);
-        checkout(cartProducts, 3000.0);
-
-        FirstMenu.Run();
+            switch (option) {
+                case 1:
+                    checkout(products, customer.getBalance());
+                    break;
+                case 2:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+                    break;
+            }
+        }
     }
 
     private static void checkout(List<CartItemDto> products, double balance) {
@@ -57,8 +70,8 @@ public class Main {
             return;
         }
         for (CartItemDto product : products) {
-            total += product.getPrice() * product.getQuantity();
-            weight += product.getWeight() * product.getQuantity();
+            total += product.getPrice();
+            weight += product.getWeight();
             if (product.getExpiredAt() != null && product.getExpiredAt().before(new java.util.Date())) {
                 isExpired = true;
             }
