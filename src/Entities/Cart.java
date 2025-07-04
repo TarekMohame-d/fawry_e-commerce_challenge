@@ -1,8 +1,10 @@
 package Entities;
 
+import Entities.Common.IEntity;
+
 import java.util.*;
 
-public class Cart {
+public class Cart implements IEntity {
     private final UUID id;
     private final UUID customerId;
 
@@ -11,16 +13,16 @@ public class Cart {
         this.customerId = customerId;
     }
 
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
     // Navigation properties
     private Customer customer;
     private List<CartProduct> cartProducts = new ArrayList<CartProduct>();
 
     // Getters
-
-    public UUID getId() {
-        return id;
-    }
-
     public UUID getCustomerId() {
         return customerId;
     }

@@ -1,10 +1,11 @@
 package Entities;
 
+import Entities.Common.IEntity;
 import Entities.StaticData.OrderStatusType;
 
 import java.util.*;
 
-public class Order {
+public class Order implements IEntity {
     private final UUID id;
     private final UUID customerId;
     private int statusId;
@@ -23,6 +24,11 @@ public class Order {
         this.updatedAt = new Date();
     }
 
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
     public OrderStatusType getOrderStatusType() {
         return OrderStatusType.fromValue(statusId);
     }
@@ -37,10 +43,6 @@ public class Order {
     private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
     // Getters
-    public UUID getId() {
-        return id;
-    }
-
     public UUID getCustomerId() {
         return customerId;
     }

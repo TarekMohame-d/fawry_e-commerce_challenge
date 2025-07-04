@@ -1,14 +1,21 @@
 package Entities;
 
+import Entities.Common.IEntity;
+
 import java.util.*;
 
-public class Wishlist {
+public class Wishlist implements IEntity {
     private final UUID id;
     private final UUID customerId;
 
     public Wishlist(UUID customerId) {
         id = UUID.randomUUID();
         this.customerId = customerId;
+    }
+
+    @Override
+    public UUID getId() {
+        return id;
     }
 
     // Navigation Properties
@@ -26,10 +33,6 @@ public class Wishlist {
 
     public Customer getCustomer() {
         return customer;
-    }
-
-    public UUID getId() {
-        return id;
     }
 
     // Setters
