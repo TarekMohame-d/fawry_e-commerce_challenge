@@ -1,0 +1,18 @@
+package Helper;
+
+public enum TableName {
+    CUSTOMERS,
+    PRODUCTS,
+    ORDERS,
+    ORDER_ITEMS,
+    ORDER_STATUS,
+    ADDRESSES,
+    SHIPMENTS,
+    SHIPMENT_STATUS,
+    SHIPMENT_ITEMS,
+    REVIEWS,
+    WISHLISTS,
+    WISHLIST_PRODUCTS,
+    CARTS,
+    CART_PRODUCTS,
+}

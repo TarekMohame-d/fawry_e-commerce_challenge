@@ -1,8 +1,10 @@
 package Entities;
 
+import Entities.Common.IEntity;
+
 import java.util.*;
 
-public class Address {
+public class Address implements IEntity {
     private final UUID id;
     private final UUID customerId;
     private String city;
@@ -26,15 +28,16 @@ public class Address {
         this.updatedAt = new Date();
     }
 
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
     // Navigation Properties
     private Customer customer;
     private List<Shipment> shipments = new ArrayList<Shipment>();
 
     // Getters
-    public UUID getId() {
-        return id;
-    }
-
     public UUID getCustomerId() {
         return customerId;
     }

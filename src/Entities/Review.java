@@ -1,8 +1,10 @@
 package Entities;
 
+import Entities.Common.IEntity;
+
 import java.util.*;
 
-public class Review {
+public class Review implements IEntity {
     private final UUID id;
     private final UUID customerId;
     private final UUID productId;
@@ -24,15 +26,16 @@ public class Review {
         this.updatedAt = new Date();
     }
 
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
     // Navigation properties
     private Customer customer;
     private Product product;
 
     // Getters
-    public UUID getId() {
-        return id;
-    }
-
     public UUID getCustomerId() {
         return customerId;
     }

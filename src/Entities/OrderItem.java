@@ -1,8 +1,10 @@
 package Entities;
 
+import Entities.Common.IEntity;
+
 import java.util.*;
 
-public class OrderItem {
+public class OrderItem implements IEntity {
     private final UUID id;
     private final UUID orderId;
     private final UUID productId;
@@ -24,16 +26,17 @@ public class OrderItem {
         this.updatedAt = new Date();
     }
 
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
     // Navigation Properties
     private List<ShipmentItem> shipmentItems = new ArrayList<>();
     private Product product;
     private Order order;
 
     // Getters
-    public UUID getId() {
-        return id;
-    }
-
     public UUID getOrderId() {
         return orderId;
     }

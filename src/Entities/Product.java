@@ -1,8 +1,10 @@
 package Entities;
 
+import Entities.Common.IEntity;
+
 import java.util.*;
 
-public class Product {
+public class Product implements IEntity {
     private final UUID id;
     private String name;
     private String description;
@@ -33,6 +35,11 @@ public class Product {
         this.updatedAt = new Date();
     }
 
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
     // Navigation Properties
     public List<CartProduct> cartProducts = new ArrayList<CartProduct>();
     public List<Review> reviews = new ArrayList<Review>();
@@ -40,10 +47,6 @@ public class Product {
     public List<WishlistProduct> wishlistProducts = new ArrayList<WishlistProduct>();
 
     // Getters
-    public UUID getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }

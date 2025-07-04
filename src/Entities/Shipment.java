@@ -1,10 +1,11 @@
 package Entities;
 
+import Entities.Common.IEntity;
 import Entities.StaticData.ShipmentStatusType;
 
 import java.util.*;
 
-public class Shipment {
+public class Shipment implements IEntity {
     private final UUID id;
     private UUID addressId;
     private final UUID customerId;
@@ -34,6 +35,11 @@ public class Shipment {
         this.updatedAt = new Date();
     }
 
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
     public ShipmentStatusType getShipmentStatusType() {
         return ShipmentStatusType.fromValue(statusId);
     }
@@ -49,10 +55,6 @@ public class Shipment {
     private List<ShipmentItem> shipmentItems = new ArrayList<>();
 
     // Getters
-    public UUID getId() {
-        return id;
-    }
-
     public UUID getAddressId() {
         return addressId;
     }
@@ -148,6 +150,14 @@ public class Shipment {
 
     public void setShipmentItems(List<ShipmentItem> shipmentItems) {
         this.shipmentItems = shipmentItems;
+    }
+
+    public void setAddressId(UUID addressId) {
+        this.addressId = addressId;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
 
